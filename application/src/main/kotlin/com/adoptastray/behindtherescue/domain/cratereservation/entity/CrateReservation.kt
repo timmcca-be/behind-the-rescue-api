@@ -1,0 +1,17 @@
+package com.adoptastray.behindtherescue.domain.cratereservation.entity
+
+import com.adoptastray.behindtherescue.domain.adoptionevent.entity.AdoptionEvent
+import com.adoptastray.behindtherescue.domain.cratereservation.CrateSize
+import java.time.LocalDate
+import javax.persistence.*
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
+
+@Entity(name = "crate_reservation")
+data class CrateReservation(
+    @Id @GeneratedValue val id: Int = 0,
+    @ManyToOne val adoptionEvent: AdoptionEvent,
+    @NotNull val date: LocalDate,
+    @NotNull val crateSize: CrateSize,
+    @NotNull @NotEmpty @ElementCollection val animalIDs: Set<Int>,
+)
