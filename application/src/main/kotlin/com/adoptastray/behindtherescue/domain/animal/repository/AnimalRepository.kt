@@ -5,11 +5,11 @@ import com.adoptastray.behindtherescue.domain.animal.entity.Animal
 import com.adoptastray.petango.AdoptableSearchResponse
 import com.adoptastray.petango.WsAdoption
 import com.adoptastray.petango.WsAdoptionSoap
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
 
 typealias AdoptableSearchDetails = AdoptableSearchResponse.AdoptableSearchResult.XmlNode.AdoptableSearch
 
-private const val AUTH_KEY = "TODO: pull from application.properties"
 private const val SITE = "Stray Animal Adoption Program"
 
 fun toAnimal(details: AdoptableSearchDetails) = Animal(
@@ -20,10 +20,13 @@ fun toAnimal(details: AdoptableSearchDetails) = Animal(
 
 @Repository
 class AnimalRepository {
+    @Value("\${behind-the-rescue.petango.auth-key}")
+    private lateinit var authKey: String
+
     private val animalClient: WsAdoptionSoap = WsAdoption().wsAdoptionSoap
 
     fun findById(id: Int): Animal {
-        val details = animalClient.adoptableDetails(id.toString(), AUTH_KEY).adoptableDetails
+        val details = animalClient.adoptableDetails(id.toString(), authKey).adoptableDetails
         return Animal(
             details.id.toInt(),
             details.animalName,
@@ -32,7 +35,7 @@ class AnimalRepository {
     }
 
     private fun getAllInternal(): List<AdoptableSearchDetails> = animalClient.adoptableSearch(
-        AUTH_KEY,
+        authKey,
         "",
         "",
         "",
