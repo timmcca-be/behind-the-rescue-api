@@ -31,6 +31,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-data-rest:1.5.12")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.5.12")
 	implementation("jakarta.xml.ws:jakarta.xml.ws-api:2.3.3")
+	runtimeOnly("org.postgresql:postgresql:42.3.0")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

@@ -35,21 +35,8 @@ class AnimalRepository {
     }
 
     private fun getAllInternal(): List<AdoptableSearchDetails> = animalClient.adoptableSearch(
-        authKey,
-        "",
-        "",
-        "",
-        "",
-        SITE,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
+        authKey, "", "", "", "",
+        SITE, "", "", "", "", "", "", "", "", "",
     ).xmlNode
         .map { node -> node.adoptableSearch }
         .filterNotNull()
