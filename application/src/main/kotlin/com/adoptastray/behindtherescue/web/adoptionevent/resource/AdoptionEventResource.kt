@@ -4,22 +4,25 @@ import com.adoptastray.behindtherescue.application.adoptionevent.service.Adoptio
 import com.adoptastray.behindtherescue.web.adoptionevent.message.CreateAdoptionEventRequest
 import com.adoptastray.behindtherescue.web.adoptionevent.message.CreateAdoptionEventResponse
 import com.adoptastray.behindtherescue.web.adoptionevent.message.GetAdoptionEventResponse
+import com.adoptastray.behindtherescue.web.adoptionevent.message.GetAllAdoptionEventsResponse
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/adoption-events")
-class AdoptionEventResource(val adoptionEventService: AdoptionEventService) {
+class AdoptionEventResource(val service: AdoptionEventService) {
+    @GetMapping
+    fun getAll(): GetAllAdoptionEventsResponse = GetAllAdoptionEventsResponse(service.getAll());
+
     @GetMapping("/{adoptionEventID}")
     fun get(@PathVariable adoptionEventID: Int): GetAdoptionEventResponse {
-        return GetAdoptionEventResponse(adoptionEventService.get(adoptionEventID));
+        return GetAdoptionEventResponse(service.get(adoptionEventID));
     }
 
     @PostMapping
-    fun create(@RequestBody request: CreateAdoptionEventRequest): CreateAdoptionEventResponse {
-        return CreateAdoptionEventResponse(adoptionEventService.create(
+    fun create(@RequestBody request: CreateAdoptionEventRequest): CreateAdoptionEventResponse =
+        CreateAdoptionEventResponse(service.create(
             request.name,
             request.availableSpecies,
             request.dayOfWeek,
         ))
-    }
 }

@@ -1,4 +1,4 @@
-package com.adoptastray.behindtherescue
+package com.adoptastray.behindtherescue.web.configuration
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

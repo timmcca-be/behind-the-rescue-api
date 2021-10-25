@@ -12,6 +12,7 @@ data class CrateReservation(
     @Id @GeneratedValue val id: Int = 0,
     @ManyToOne val adoptionEvent: AdoptionEvent,
     @NotNull val date: LocalDate,
-    @NotNull val crateSize: CrateSize,
     @NotNull @NotEmpty @ElementCollection val animalIDs: Set<Int>,
+    @NotNull val crateSize: CrateSize,
+    val fullyVaccinated: Boolean,
 )

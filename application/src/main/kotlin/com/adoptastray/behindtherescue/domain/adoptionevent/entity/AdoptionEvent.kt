@@ -18,7 +18,7 @@ data class AdoptionEvent(
     @NotNull val availableSpecies: Species,
     @NotNull val dayOfWeek: DayOfWeek,
 ) {
-    fun reserveCrate(date: LocalDate, crateSize: CrateSize, animals: Set<Animal>): CrateReservation {
+    fun reserveCrate(date: LocalDate, animals: Collection<Animal>, crateSize: CrateSize, fullyVaccinated: Boolean): CrateReservation {
         require(date.dayOfWeek == dayOfWeek) { "This event occurs on ${dayOfWeek}s; you cannot reserve a crate for it on a ${date.dayOfWeek}" }
         for (animal in animals) {
             require(animal.species == availableSpecies) { "${animal.name} is a ${animal.species}, which cannot be brought to an event for ${availableSpecies}s" }
@@ -26,8 +26,9 @@ data class AdoptionEvent(
         return CrateReservation(
             adoptionEvent = this,
             date = date,
-            crateSize = crateSize,
             animalIDs = animals.map { animal -> animal.id }.toSet(),
+            crateSize = crateSize,
+            fullyVaccinated = fullyVaccinated,
         )
     }
 }

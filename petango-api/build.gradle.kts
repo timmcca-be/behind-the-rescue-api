@@ -3,6 +3,7 @@ plugins {
 }
 
 version = "0.0.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_16
 
 java.sourceSets["main"].java {
     srcDir("build/generated")
@@ -17,7 +18,7 @@ val jaxws by configurations.creating
 dependencies {
     jaxws("com.sun.xml.ws:jaxws-tools:2.3.5")
     implementation("jakarta.xml.ws:jakarta.xml.ws-api:2.3.3")
-    implementation("com.sun.xml.ws:runtime:2.3.5")
+    implementation("com.sun.xml.ws:jaxws-rt:2.3.5")
 }
 
 task("wsimport-petango") {

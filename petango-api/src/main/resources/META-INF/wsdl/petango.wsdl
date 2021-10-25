@@ -90,7 +90,51 @@
             <s:element name="AdoptableSearchResponse">
                 <s:complexType>
                     <s:sequence>
-                        <s:element minOccurs="0" maxOccurs="1" name="AdoptableSearchResult" type="tns:ArrayOfXmlNode" />
+                        <s:element name="AdoptableSearchResult">
+                            <s:complexType>
+                                <s:sequence>
+                                    <s:element maxOccurs="unbounded" name="XmlNode">
+                                        <s:complexType>
+                                            <s:sequence>
+                                                <s:element name="adoptableSearch" form="unqualified">
+                                                    <s:complexType>
+                                                        <s:sequence>
+                                                            <s:element name="ID" form="unqualified" type="s:integer" />
+                                                            <s:element name="Name" form="unqualified" type="s:string" />
+                                                            <s:element name="Species" form="unqualified" type="s:string" />
+                                                            <s:element name="Sex" form="unqualified" type="s:string" />
+                                                            <s:element name="PrimaryBreed" form="unqualified" type="s:string" />
+                                                            <s:element name="SecondaryBreed" form="unqualified" type="s:string" />
+                                                            <s:element name="SN" form="unqualified" type="s:string" />
+                                                            <s:element name="Age" form="unqualified" type="s:integer" />
+                                                            <s:element name="Photo" form="unqualified" type="s:anyURI" />
+                                                            <s:element name="Location" form="unqualified" type="s:string" />
+                                                            <s:element name="OnHold" form="unqualified" type="s:string" />
+                                                            <s:element name="SpecialNeeds" form="unqualified" type="s:string" />
+                                                            <s:element name="NoDogs" form="unqualified" type="s:string" />
+                                                            <s:element name="NoCats" form="unqualified" type="s:string" />
+                                                            <s:element name="NoKids" form="unqualified" type="s:string" />
+                                                            <s:element name="MemoList" form="unqualified" type="s:string" />
+                                                            <s:element name="ARN" form="unqualified" type="s:string" />
+                                                            <s:element name="BehaviorTestList" form="unqualified" type="s:string" />
+                                                            <s:element name="Stage" form="unqualified" type="s:string" />
+                                                            <s:element name="AnimalType" form="unqualified" type="s:NMTOKEN" />
+                                                            <s:element name="AgeGroup" form="unqualified" type="s:string" />
+                                                            <s:element name="WildlifeIntakeInjury" form="unqualified" type="s:string" />
+                                                            <s:element name="WildlifeIntakeCause" form="unqualified" type="s:string" />
+                                                            <s:element name="BuddyID" form="unqualified" type="s:integer" />
+                                                            <s:element name="Featured" form="unqualified" type="s:string" />
+                                                            <s:element name="Sublocation" form="unqualified" type="s:string" />
+                                                            <s:element name="ChipNumber" form="unqualified" type="s:integer" />
+                                                        </s:sequence>
+                                                    </s:complexType>
+                                                </s:element>
+                                            </s:sequence>
+                                        </s:complexType>
+                                    </s:element>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
                     </s:sequence>
                 </s:complexType>
             </s:element>
@@ -134,10 +178,67 @@
             <s:element name="AdoptableDetailsResponse">
                 <s:complexType>
                     <s:sequence>
-                        <s:element minOccurs="0" maxOccurs="1" name="AdoptableDetailsResult">
-                            <s:complexType mixed="true">
+                        <s:element name="AdoptableDetailsResult">
+                            <s:complexType>
                                 <s:sequence>
-                                    <s:any />
+                                    <s:element name="adoptableDetails" form="unqualified">
+                                        <s:complexType>
+                                            <s:sequence>
+                                                <s:element name="CompanyID" form="unqualified" type="s:integer"/>
+                                                <s:element name="ID" form="unqualified" type="s:integer"/>
+                                                <s:element name="AnimalName" form="unqualified" type="s:string"/>
+                                                <s:element name="Species" form="unqualified" type="s:string"/>
+                                                <s:element name="Sex" form="unqualified" type="s:string"/>
+                                                <s:element name="Altered" form="unqualified" type="s:string"/>
+                                                <s:element name="PrimaryBreed" form="unqualified" type="s:string"/>
+                                                <s:element name="SecondaryBreed" form="unqualified" type="s:string"/>
+                                                <s:element name="PrimaryColor" form="unqualified" type="s:string"/>
+                                                <s:element name="SecondaryColor" form="unqualified" type="s:string"/>
+                                                <s:element name="Age" form="unqualified" type="s:integer"/>
+                                                <s:element name="Size" form="unqualified" type="s:string"/>
+                                                <s:element name="Housetrained" form="unqualified" type="s:string"/>
+                                                <s:element name="Declawed" form="unqualified" type="s:string"/>
+                                                <s:element name="Price" form="unqualified" type="s:decimal"/>
+                                                <s:element name="LastIntakeDate" form="unqualified" type="s:string"/>
+                                                <s:element name="Location" form="unqualified" type="s:string"/>
+                                                <s:element name="Dsc" form="unqualified" type="s:string"/>
+                                                <s:element name="Photo1" form="unqualified" type="s:anyURI"/>
+                                                <s:element name="Photo2" form="unqualified" type="s:anyURI"/>
+                                                <s:element name="Photo3" form="unqualified" type="s:anyURI"/>
+                                                <s:element name="OnHold" form="unqualified" type="s:string"/>
+                                                <s:element name="SpecialNeeds" form="unqualified" type="s:string"/>
+                                                <s:element name="NoDogs" form="unqualified" type="s:string"/>
+                                                <s:element name="NoCats" form="unqualified" type="s:string"/>
+                                                <s:element name="NoKids" form="unqualified" type="s:string"/>
+                                                <s:element name="BehaviorResult" form="unqualified" type="s:string"/>
+                                                <s:element name="MemoList" form="unqualified" type="s:string"/>
+                                                <s:element name="Site" form="unqualified" type="s:string"/>
+                                                <s:element name="TimeInFormerHome" form="unqualified" type="s:string"/>
+                                                <s:element name="ReasonForSurrender" form="unqualified" type="s:string"/>
+                                                <s:element name="PrevEnvironment" form="unqualified" type="s:string"/>
+                                                <s:element name="LivedWithChildren" form="unqualified" type="s:string"/>
+                                                <s:element name="LivedWithAnimals" form="unqualified" type="s:string"/>
+                                                <s:element name="LivedWithAnimalTypes" form="unqualified" type="s:string"/>
+                                                <s:element name="BodyWeight" form="unqualified" type="s:string"/>
+                                                <s:element name="DateOfBirth" form="unqualified" type="s:NMTOKEN"/>
+                                                <s:element name="ARN" form="unqualified" type="s:string"/>
+                                                <s:element name="VideoID" form="unqualified" type="s:string"/>
+                                                <s:element name="BehaviorTestList" form="unqualified" type="s:string"/>
+                                                <s:element name="Stage" form="unqualified" type="s:string"/>
+                                                <s:element name="AnimalType" form="unqualified" type="s:integer"/>
+                                                <s:element name="AgeGroup" form="unqualified" type="s:string"/>
+                                                <s:element name="WildlifeIntakeInjury" form="unqualified" type="s:string"/>
+                                                <s:element name="WildlifeIntakeCause" form="unqualified" type="s:string"/>
+                                                <s:element name="BuddyID" form="unqualified" type="s:integer"/>
+                                                <s:element name="Featured" form="unqualified" type="s:string"/>
+                                                <s:element name="Sublocation" form="unqualified" type="s:string"/>
+                                                <s:element name="ChipNumber" form="unqualified" type="s:integer"/>
+                                                <s:element name="ColorPattern" form="unqualified" type="s:string"/>
+                                                <s:element name="AdoptionApplicationUrl" form="unqualified" type="s:string"/>
+                                                <s:element name="BannerURL" form="unqualified" type="s:anyURI"/>
+                                            </s:sequence>
+                                        </s:complexType>
+                                    </s:element>
                                 </s:sequence>
                             </s:complexType>
                         </s:element>
