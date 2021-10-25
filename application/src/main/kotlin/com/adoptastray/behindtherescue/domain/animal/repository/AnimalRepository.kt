@@ -6,6 +6,7 @@ import com.adoptastray.petango.AdoptableSearchResponse
 import com.adoptastray.petango.WsAdoption
 import com.adoptastray.petango.WsAdoptionSoap
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Repository
 
 typealias AdoptableSearchDetails = AdoptableSearchResponse.AdoptableSearchResult.XmlNode.AdoptableSearch
@@ -34,17 +35,16 @@ class AnimalRepository {
         )
     }
 
-    private fun getAllInternal(): List<AdoptableSearchDetails> = animalClient.adoptableSearch(
+    @Cacheable(value = ["animals"], key="'all'")
+    fun findAll(): List<Animal> = animalClient.adoptableSearch(
         authKey, "", "", "", "",
         site, "", "", "", "", "", "", "", "", "",
     ).xmlNode
         .map { node -> node.adoptableSearch }
         .filterNotNull()
-
-    fun findAll(): List<Animal> = getAllInternal()
-        .map { details -> toAnimal(details) }
-
-    fun findByIds(ids: Set<Int>): List<Animal> = getAllInternal()
-        .filter { details -> ids.contains(details.id.toInt()) }
-        .map { details -> toAnimal(details) }
+        .map { details -> Animal(
+            details.id.toInt(),
+            details.name,
+            Species.valueOf(details.species.uppercase()),
+        ) }
 }

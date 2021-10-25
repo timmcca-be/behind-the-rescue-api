@@ -2,3 +2,7 @@ behind-the-rescue:
   petango:
     site: Stray Animal Adoption Program
   time-zone: America/New_York
+spring:
+  cache:
+    jcache:
+      config: classpath:ehcache.xml

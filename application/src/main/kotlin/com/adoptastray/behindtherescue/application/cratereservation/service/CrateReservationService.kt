@@ -23,14 +23,10 @@ class CrateReservationService (
         val adoptionEvent = adoptionEventRepository.findById(adoptionEventID)
         require(adoptionEvent.isPresent) { "No adoption event with ID $adoptionEventID" }
         val crateReservations = crateReservationRepository.findByAdoptionEventIdAndDate(adoptionEventID, date)
-        val animalIDs = crateReservations
-            .fold(setOf<Int>()) { acc, value -> acc.plus(value.animalIDs)}
-            .toSet()
-        val animals = animalRepository.findByIds(animalIDs)
-        val animalMap = animals.associateBy { it.id }
+        val animalsMap = animalRepository.findAll().associateBy { it.id };
         return crateReservations.map { crateReservation -> ListCrateReservationDto(
             crateReservation,
-            crateReservation.animalIDs.mapNotNull { animalID -> animalMap[animalID] },
+            crateReservation.animalIDs.map { animalID -> animalsMap[animalID] }.filterNotNull(),
         ) }
     }
 
@@ -44,7 +40,7 @@ class CrateReservationService (
     ): CrateReservationDto {
         val adoptionEvent = adoptionEventRepository.findById(adoptionEventID)
         require(adoptionEvent.isPresent) { "No adoption event with ID $adoptionEventID" }
-        val animals = animalRepository.findByIds(animalIDs)
+        val animals = animalRepository.findAll().filter { animal -> animalIDs.contains(animal.id) }
         val crateReservation = adoptionEvent.get().reserveCrate(date, animals, crateSize, fullyVaccinated)
         crateReservationRepository.save(crateReservation)
         return CrateReservationDto(crateReservation, animals, dateProvider.today)

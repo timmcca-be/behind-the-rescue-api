@@ -22,6 +22,7 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-cache")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -31,6 +32,8 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-data-rest:1.5.12")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.5.12")
 	implementation("jakarta.xml.ws:jakarta.xml.ws-api:2.3.3")
+	implementation("javax.cache:cache-api:1.1.1")
+	implementation("org.ehcache:ehcache:3.9.7")
 	runtimeOnly("org.postgresql:postgresql:42.3.0")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

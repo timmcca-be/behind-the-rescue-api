@@ -1,6 +1,10 @@
 # SAAP Behind The Rescue API
+
 For coordinating adoption events!
+
 ## Setup
+
+Add `-Dspring.profiles.active=local` to your VM args.
 Create the file `application/src/main/resources/application-local.yaml`
 and add the following content,
 replacing `<petango-auth-key>` with the actual auth key
@@ -24,8 +28,6 @@ and add this to `application-local.yaml`:
     jpa:
         hibernate:
             ddl-auto: update
-
-
 
 ## Usage
 
