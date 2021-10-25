@@ -7,6 +7,7 @@ import com.adoptastray.behindtherescue.domain.animal.repository.AnimalRepository
 import com.adoptastray.behindtherescue.domain.cratereservation.CrateSize
 import com.adoptastray.behindtherescue.domain.cratereservation.repository.CrateReservationRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
@@ -15,6 +16,7 @@ class CrateReservationService (
     val crateReservationRepository: CrateReservationRepository,
     val animalRepository: AnimalRepository,
 ) {
+    @Transactional(readOnly = true)
     fun getByEvent(adoptionEventID: Int, date: LocalDate): List<ListCrateReservationDto> {
         val adoptionEvent = adoptionEventRepository.findById(adoptionEventID)
         require(adoptionEvent.isPresent) { "No adoption event with ID $adoptionEventID" }
@@ -30,6 +32,7 @@ class CrateReservationService (
         ) }
     }
 
+    @Transactional
     fun reserve(
         adoptionEventID: Int,
         date: LocalDate,

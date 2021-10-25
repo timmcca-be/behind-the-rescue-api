@@ -23,7 +23,7 @@ and add this to `application-local.yaml`:
             driver-class-name: org.postgresql.Driver
     jpa:
         hibernate:
-            ddl-auto: create
+            ddl-auto: update
 
 
 
