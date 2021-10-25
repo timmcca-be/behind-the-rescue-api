@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository
 
 typealias AdoptableSearchDetails = AdoptableSearchResponse.AdoptableSearchResult.XmlNode.AdoptableSearch
 
-private const val SITE = "Stray Animal Adoption Program"
-
 fun toAnimal(details: AdoptableSearchDetails) = Animal(
     details.id.toInt(),
     details.name,
@@ -22,6 +20,8 @@ fun toAnimal(details: AdoptableSearchDetails) = Animal(
 class AnimalRepository {
     @Value("\${behind-the-rescue.petango.auth-key}")
     private lateinit var authKey: String
+    @Value("\${behind-the-rescue.petango.site}")
+    private lateinit var site: String
 
     private val animalClient: WsAdoptionSoap = WsAdoption().wsAdoptionSoap
 
@@ -36,7 +36,7 @@ class AnimalRepository {
 
     private fun getAllInternal(): List<AdoptableSearchDetails> = animalClient.adoptableSearch(
         authKey, "", "", "", "",
-        SITE, "", "", "", "", "", "", "", "", "",
+        site, "", "", "", "", "", "", "", "", "",
     ).xmlNode
         .map { node -> node.adoptableSearch }
         .filterNotNull()

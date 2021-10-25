@@ -15,9 +15,9 @@ data class CrateReservationDto(
     val crateSize: CrateSize,
     val fullyVaccinated: Boolean,
 ) {
-    constructor(crateReservation: CrateReservation, animals: Collection<Animal>) : this(
+    constructor(crateReservation: CrateReservation, animals: Collection<Animal>, today: LocalDate) : this(
         crateReservation.id,
-        AdoptionEventDto(crateReservation.adoptionEvent),
+        AdoptionEventDto(crateReservation.adoptionEvent, today),
         crateReservation.date,
         animals.map { animal -> AnimalDto(animal) },
         crateReservation.crateSize,

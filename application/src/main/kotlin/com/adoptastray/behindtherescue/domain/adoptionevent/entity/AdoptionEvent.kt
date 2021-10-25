@@ -6,6 +6,7 @@ import com.adoptastray.behindtherescue.domain.cratereservation.CrateSize
 import com.adoptastray.behindtherescue.domain.cratereservation.entity.CrateReservation
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.temporal.TemporalAdjusters
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -31,4 +32,6 @@ data class AdoptionEvent(
             fullyVaccinated = fullyVaccinated,
         )
     }
+
+    fun nextOccurrenceDate(today: LocalDate): LocalDate = today.with(TemporalAdjusters.next(dayOfWeek))
 }

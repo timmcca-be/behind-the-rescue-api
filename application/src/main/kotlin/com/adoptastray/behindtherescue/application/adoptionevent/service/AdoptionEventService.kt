@@ -1,25 +1,33 @@
 package com.adoptastray.behindtherescue.application.adoptionevent.service
 
 import com.adoptastray.behindtherescue.application.adoptionevent.dto.AdoptionEventDto
+import com.adoptastray.behindtherescue.application.common.DateProvider
 import com.adoptastray.behindtherescue.domain.adoptionevent.entity.AdoptionEvent
 import com.adoptastray.behindtherescue.domain.adoptionevent.repository.AdoptionEventRepository
 import com.adoptastray.behindtherescue.domain.animal.Species
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.ZoneId
 
 @Service
-class AdoptionEventService(val adoptionEventRepository: AdoptionEventRepository) {
+class AdoptionEventService(
+    val adoptionEventRepository: AdoptionEventRepository,
+    val dateProvider: DateProvider,
+) {
     @Transactional(readOnly = true)
     fun getAll(): List<AdoptionEventDto> {
-        return adoptionEventRepository.findAll().map { adoptionEvent -> AdoptionEventDto(adoptionEvent) }
+        return adoptionEventRepository.findAll()
+            .map { adoptionEvent -> AdoptionEventDto(adoptionEvent, dateProvider.today) }
     }
 
     @Transactional(readOnly = true)
     fun get(adoptionEventID: Int): AdoptionEventDto {
         val adoptionEvent = adoptionEventRepository.findById(adoptionEventID)
         require(adoptionEvent.isPresent) { "No adoption event with ID $adoptionEventID" }
-        return AdoptionEventDto(adoptionEvent.get())
+        return AdoptionEventDto(adoptionEvent.get(), dateProvider.today)
     }
 
     @Transactional
@@ -30,6 +38,6 @@ class AdoptionEventService(val adoptionEventRepository: AdoptionEventRepository)
             dayOfWeek = dayOfWeek,
         )
         adoptionEventRepository.save(adoptionEvent)
-        return AdoptionEventDto(adoptionEvent)
+        return AdoptionEventDto(adoptionEvent, dateProvider.today)
     }
 }

@@ -1,5 +1,6 @@
 package com.adoptastray.behindtherescue.application.cratereservation.service
 
+import com.adoptastray.behindtherescue.application.common.DateProvider
 import com.adoptastray.behindtherescue.application.cratereservation.dto.CrateReservationDto
 import com.adoptastray.behindtherescue.application.cratereservation.dto.ListCrateReservationDto
 import com.adoptastray.behindtherescue.domain.adoptionevent.repository.AdoptionEventRepository
@@ -15,6 +16,7 @@ class CrateReservationService (
     val adoptionEventRepository: AdoptionEventRepository,
     val crateReservationRepository: CrateReservationRepository,
     val animalRepository: AnimalRepository,
+    val dateProvider: DateProvider,
 ) {
     @Transactional(readOnly = true)
     fun getByEvent(adoptionEventID: Int, date: LocalDate): List<ListCrateReservationDto> {
@@ -45,6 +47,6 @@ class CrateReservationService (
         val animals = animalRepository.findByIds(animalIDs)
         val crateReservation = adoptionEvent.get().reserveCrate(date, animals, crateSize, fullyVaccinated)
         crateReservationRepository.save(crateReservation)
-        return CrateReservationDto(crateReservation, animals)
+        return CrateReservationDto(crateReservation, animals, dateProvider.today)
     }
 }
