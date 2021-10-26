@@ -1,5 +1,5 @@
 package com.adoptastray.behindtherescue.domain.cratereservation
 
 enum class CrateSize {
-    SMALL, MEDIUM, LARGE, EXTRA_LARGE
+    SMALL, MEDIUM, LARGE, EXTRA_LARGE;
 }

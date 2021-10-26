@@ -1,7 +1,7 @@
 package com.adoptastray.behindtherescue.web.cratereservation.resource
 
+import com.adoptastray.behindtherescue.application.cratereservation.dto.EventCrateReservationsDto
 import com.adoptastray.behindtherescue.application.cratereservation.service.CrateReservationService
-import com.adoptastray.behindtherescue.web.cratereservation.message.GetCrateReservationsResponse
 import com.adoptastray.behindtherescue.web.cratereservation.message.ReserveCrateRequest
 import com.adoptastray.behindtherescue.web.cratereservation.message.ReserveCrateResponse
 import org.springframework.format.annotation.DateTimeFormat
@@ -15,7 +15,7 @@ class CrateReservationResource(val service: CrateReservationService) {
     fun get(
         @PathVariable adoptionEventID: Int,
         @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate,
-    ): GetCrateReservationsResponse = GetCrateReservationsResponse(service.getByEvent(adoptionEventID, date))
+    ): EventCrateReservationsDto = service.getByEvent(adoptionEventID, date)
 
     @PostMapping
     fun reserve(

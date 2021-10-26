@@ -4,7 +4,6 @@ import com.adoptastray.behindtherescue.application.animal.dto.AnimalDto
 import com.adoptastray.behindtherescue.domain.animal.entity.Animal
 import com.adoptastray.behindtherescue.domain.cratereservation.CrateSize
 import com.adoptastray.behindtherescue.domain.cratereservation.entity.CrateReservation
-import java.time.LocalDate
 
 data class ListCrateReservationDto(
     val id: Int,
