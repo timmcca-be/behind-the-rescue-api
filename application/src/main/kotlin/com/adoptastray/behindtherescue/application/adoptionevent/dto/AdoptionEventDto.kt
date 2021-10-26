@@ -8,6 +8,7 @@ import java.time.LocalDate
 data class AdoptionEventDto(
     val id: Int,
     val name: String,
+    val location: String,
     val availableSpecies: Species,
     val dayOfWeek: DayOfWeek,
     val nextOccurrenceDate: LocalDate,
@@ -15,6 +16,7 @@ data class AdoptionEventDto(
     constructor(adoptionEvent: AdoptionEvent, today: LocalDate) : this(
         adoptionEvent.id,
         adoptionEvent.name,
+        adoptionEvent.location,
         adoptionEvent.availableSpecies,
         adoptionEvent.dayOfWeek,
         adoptionEvent.nextOccurrenceDate(today),

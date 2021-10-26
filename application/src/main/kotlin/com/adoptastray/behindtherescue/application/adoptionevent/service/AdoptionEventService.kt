@@ -31,9 +31,15 @@ class AdoptionEventService(
     }
 
     @Transactional
-    fun create(name: String, availableSpecies: Species, dayOfWeek: DayOfWeek): AdoptionEventDto {
+    fun create(
+        name: String,
+        location: String,
+        availableSpecies: Species,
+        dayOfWeek: DayOfWeek,
+    ): AdoptionEventDto {
         val adoptionEvent = AdoptionEvent(
             name = name,
+            location = location,
             availableSpecies = availableSpecies,
             dayOfWeek = dayOfWeek,
         )

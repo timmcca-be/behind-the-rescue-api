@@ -22,6 +22,7 @@ class AdoptionEventResource(val service: AdoptionEventService) {
     fun create(@RequestBody request: CreateAdoptionEventRequest): CreateAdoptionEventResponse =
         CreateAdoptionEventResponse(service.create(
             request.name,
+            request.location,
             request.availableSpecies,
             request.dayOfWeek,
         ))

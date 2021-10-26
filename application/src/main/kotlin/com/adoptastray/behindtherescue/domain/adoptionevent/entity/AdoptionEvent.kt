@@ -12,10 +12,11 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.validation.constraints.NotNull
 
-@Entity(name = "adoption_event")
+@Entity(name = "adoption_events")
 data class AdoptionEvent(
     @Id @GeneratedValue val id: Int = 0,
     @NotNull val name: String,
+    @NotNull val location: String,
     @NotNull val availableSpecies: Species,
     @NotNull val dayOfWeek: DayOfWeek,
 ) {
