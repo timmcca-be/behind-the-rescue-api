@@ -6,6 +6,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class AnimalService(val animalRepository: AnimalRepository) {
-    fun getAll(): List<AnimalDto> = animalRepository.findAll()
-        .map { animal -> AnimalDto(animal) }
+    fun getAll(): List<AnimalDto> = animalRepository.findAll().map { AnimalDto(it) }
 }

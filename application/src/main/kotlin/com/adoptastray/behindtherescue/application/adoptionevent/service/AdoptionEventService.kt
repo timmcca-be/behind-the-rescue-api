@@ -20,7 +20,7 @@ class AdoptionEventService(
     @Transactional(readOnly = true)
     fun getAll(): List<AdoptionEventDto> {
         return adoptionEventRepository.findAll()
-            .map { adoptionEvent -> AdoptionEventDto(adoptionEvent, dateProvider.today) }
+            .map { AdoptionEventDto(it, dateProvider.today) }
     }
 
     @Transactional(readOnly = true)

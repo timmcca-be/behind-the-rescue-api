@@ -40,11 +40,11 @@ class AnimalRepository {
         authKey, "", "", "", "",
         site, "", "", "", "", "", "", "", "", "",
     ).xmlNode
-        .map { node -> node.adoptableSearch }
+        .map { it.adoptableSearch }
         .filterNotNull()
-        .map { details -> Animal(
-            details.id.toInt(),
-            details.name,
-            Species.valueOf(details.species.uppercase()),
+        .map { Animal(
+            it.id.toInt(),
+            it.name,
+            Species.valueOf(it.species.uppercase()),
         ) }
 }

@@ -28,7 +28,7 @@ data class AdoptionEvent(
         return CrateReservation(
             adoptionEvent = this,
             date = date,
-            animalIDs = animals.map { animal -> animal.id }.toSet(),
+            animalIDs = animals.map { it.id }.toSet(),
             crateSize = crateSize,
             fullyVaccinated = fullyVaccinated,
         )

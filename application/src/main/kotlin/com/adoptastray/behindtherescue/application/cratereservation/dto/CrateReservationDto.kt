@@ -19,7 +19,7 @@ data class CrateReservationDto(
         crateReservation.id,
         AdoptionEventDto(crateReservation.adoptionEvent, today),
         crateReservation.date,
-        animals.map { animal -> AnimalDto(animal) },
+        animals.map { AnimalDto(it) },
         crateReservation.crateSize,
         crateReservation.fullyVaccinated,
     )

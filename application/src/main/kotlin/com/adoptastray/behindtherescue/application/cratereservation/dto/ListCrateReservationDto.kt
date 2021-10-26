@@ -13,7 +13,7 @@ data class ListCrateReservationDto(
 ) {
     constructor(crateReservation: CrateReservation, animals: Collection<Animal>) : this(
         crateReservation.id,
-        animals.map { animal -> AnimalDto(animal) },
+        animals.map { AnimalDto(it) },
         crateReservation.crateSize,
         crateReservation.fullyVaccinated,
     )
