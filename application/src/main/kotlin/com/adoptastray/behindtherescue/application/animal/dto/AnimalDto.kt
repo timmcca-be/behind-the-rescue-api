@@ -7,10 +7,14 @@ data class AnimalDto(
     val id: Int,
     val name: String,
     val species: Species,
+    val photoLink: String,
+    val foster: String,
 ) {
     constructor(animal: Animal) : this(
         animal.id,
         animal.name,
         animal.species,
+        animal.photoLink,
+        animal.foster,
     )
 }

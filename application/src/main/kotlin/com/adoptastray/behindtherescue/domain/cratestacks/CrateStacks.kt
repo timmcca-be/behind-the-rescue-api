@@ -18,7 +18,7 @@ class CrateStacks(crateReservations: Collection<CrateReservation>) {
         }
 
         val crateStacks = mutableListOf<CrateStack>()
-        while (nonVaccinatedCrates.size > 0) {
+        while (nonVaccinatedCrates.isNotEmpty()) {
             val crate = nonVaccinatedCrates.remove()
             crateStacks.add(
                 if (crate.canStackOn(vaccinatedCrates.peek())) {
@@ -28,7 +28,7 @@ class CrateStacks(crateReservations: Collection<CrateReservation>) {
                 }
             )
         }
-        while (vaccinatedCrates.size > 0) {
+        while (vaccinatedCrates.isNotEmpty()) {
             crateStacks.add(CrateStack(vaccinatedCrates.remove()))
         }
         this.crateStacks = crateStacks.toList()

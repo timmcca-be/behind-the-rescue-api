@@ -22,13 +22,15 @@ class CrateReservationService (
 ) {
     @Transactional(readOnly = true)
     fun getByEvent(adoptionEventID: Int, date: LocalDate): EventCrateReservationsDto {
-        val adoptionEvent = adoptionEventRepository.findById(adoptionEventID)
-        require(adoptionEvent.isPresent) { "No adoption event with ID $adoptionEventID" }
+        val adoptionEvent = adoptionEventRepository.findById(adoptionEventID).get()
         val crateReservations = crateReservationRepository.findByAdoptionEventIdAndDate(adoptionEventID, date)
-        val animalsMap = animalRepository.findAll().associateBy { it.id };
+        // TODO: should refactor data access to abstract away the JPA bits
+        // that way the animals can be populated on the reservation by the repo
+        val animalsMap = animalRepository.findBySpecies(adoptionEvent.availableSpecies)
+            .associateBy { it.id };
         val crateReservationDtos = crateReservations.map { reservation -> ListCrateReservationDto(
             reservation,
-            reservation.animalIDs.map { animalsMap[it] }.filterNotNull(),
+            reservation.animalIDs.mapNotNull { animalsMap[it] },
         ) }
         val crateStacks = CrateStacks(crateReservations)
         return EventCrateReservationsDto(crateReservationDtos, crateStacks)
@@ -42,10 +44,11 @@ class CrateReservationService (
         crateSize: CrateSize,
         fullyVaccinated: Boolean,
     ): CrateReservationDto {
-        val adoptionEvent = adoptionEventRepository.findById(adoptionEventID)
-        require(adoptionEvent.isPresent) { "No adoption event with ID $adoptionEventID" }
-        val animals = animalRepository.findAll().filter { animalIDs.contains(it.id) }
-        val crateReservation = adoptionEvent.get().reserveCrate(date, animals, crateSize, fullyVaccinated)
+        val adoptionEvent = adoptionEventRepository.findById(adoptionEventID).get()
+        val animals = animalRepository.findAvailableBySpecies(adoptionEvent.availableSpecies, date)
+            .filter { animalIDs.contains(it.id) }
+        require(animals.size == animalIDs.size) { "Invalid animal ID(s)" }
+        val crateReservation = adoptionEvent.reserveCrate(date, animals, crateSize, fullyVaccinated)
         crateReservationRepository.save(crateReservation)
         return CrateReservationDto(crateReservation, animals, dateProvider.today)
     }

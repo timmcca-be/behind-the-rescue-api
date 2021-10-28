@@ -10,9 +10,11 @@ import java.time.temporal.TemporalAdjusters
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.Table
 import javax.validation.constraints.NotNull
 
-@Entity(name = "adoption_events")
+@Entity(name = "AdoptionEvent")
+@Table(name = "adoption_events")
 data class AdoptionEvent(
     @Id @GeneratedValue val id: Int = 0,
     @NotNull val name: String,

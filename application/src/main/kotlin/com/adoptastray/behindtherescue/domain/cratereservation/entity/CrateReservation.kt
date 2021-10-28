@@ -7,7 +7,8 @@ import javax.persistence.*
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
-@Entity(name = "crate_reservations")
+@Entity(name = "CrateReservation")
+@Table(name = "crate_reservations")
 data class CrateReservation(
     @Id @GeneratedValue val id: Int = 0,
     @ManyToOne val adoptionEvent: AdoptionEvent,

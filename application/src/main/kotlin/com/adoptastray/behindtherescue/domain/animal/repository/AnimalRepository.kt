@@ -2,49 +2,25 @@ package com.adoptastray.behindtherescue.domain.animal.repository
 
 import com.adoptastray.behindtherescue.domain.animal.Species
 import com.adoptastray.behindtherescue.domain.animal.entity.Animal
+import com.adoptastray.behindtherescue.domain.cratereservation.repository.CrateReservationRepository
 import com.adoptastray.petango.AdoptableSearchResponse
 import com.adoptastray.petango.WsAdoption
 import com.adoptastray.petango.WsAdoptionSoap
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Repository
-
-typealias AdoptableSearchDetails = AdoptableSearchResponse.AdoptableSearchResult.XmlNode.AdoptableSearch
-
-fun toAnimal(details: AdoptableSearchDetails) = Animal(
-    details.id.toInt(),
-    details.name,
-    Species.valueOf(details.species.uppercase()),
-)
+import java.time.LocalDate
 
 @Repository
-class AnimalRepository {
-    @Value("\${behind-the-rescue.petango.auth-key}")
-    private lateinit var authKey: String
-    @Value("\${behind-the-rescue.petango.site}")
-    private lateinit var site: String
+class AnimalRepository(
+    val api: AnimalAPI,
+    val crateReservationRepository: CrateReservationRepository,
+) {
+    fun findBySpecies(species: Species): List<Animal> = api.findBySpecies(species)
 
-    private val animalClient: WsAdoptionSoap = WsAdoption().wsAdoptionSoap
-
-    fun findById(id: Int): Animal {
-        val details = animalClient.adoptableDetails(id.toString(), authKey).adoptableDetails
-        return Animal(
-            details.id.toInt(),
-            details.animalName,
-            Species.valueOf(details.species.uppercase()),
-        )
+    fun findAvailableBySpecies(species: Species, date: LocalDate): List<Animal> {
+        val animals = api.findBySpecies(species)
+        val reservedAnimalIDs = crateReservationRepository.findReservedAnimalIDs(date, species)
+        return animals.filter { !reservedAnimalIDs.contains(it.id) }
     }
-
-    @Cacheable(value = ["animals"], key="'all'")
-    fun findAll(): List<Animal> = animalClient.adoptableSearch(
-        authKey, "", "", "", "",
-        site, "", "", "", "", "", "", "", "", "",
-    ).xmlNode
-        .map { it.adoptableSearch }
-        .filterNotNull()
-        .map { Animal(
-            it.id.toInt(),
-            it.name,
-            Species.valueOf(it.species.uppercase()),
-        ) }
 }

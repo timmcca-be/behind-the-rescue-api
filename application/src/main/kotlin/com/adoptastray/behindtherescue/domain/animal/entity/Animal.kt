@@ -8,4 +8,6 @@ data class Animal(
     val id: Int,
     val name: String,
     val species: Species,
+    val photoLink: String,
+    val foster: String,
 ) : Serializable
