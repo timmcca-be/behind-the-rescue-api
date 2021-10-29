@@ -29,9 +29,6 @@ and add this to `application-local.yaml`:
             username: postgres
             password: postgres
             driver-class-name: org.postgresql.Driver
-    jpa:
-        hibernate:
-            ddl-auto: update
 
 ## Usage
 

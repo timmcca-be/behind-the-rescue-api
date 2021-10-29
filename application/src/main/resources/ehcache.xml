@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache:config xmlns:ehcache="http://www.ehcache.org/v3">
-    <ehcache:cache alias="animals">
-        <ehcache:expiry>
-            <ehcache:tti unit="minutes">5</ehcache:tti>
-        </ehcache:expiry>
-        <ehcache:resources>
-            <ehcache:heap unit="entries">2</ehcache:heap>
-            <ehcache:offheap unit="MB">10</ehcache:offheap>
-        </ehcache:resources>
-    </ehcache:cache>
-</ehcache:config>
+<config xmlns="http://www.ehcache.org/v3">
+    <cache alias="animals">
+        <expiry>
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">2</heap>
+            <offheap unit="MB">10</offheap>
+        </resources>
+    </cache>
+    <cache alias="buckets">
+        <expiry>
+            <ttl unit="seconds">3600</ttl>
+        </expiry>
+        <heap unit="entries">1000000</heap>
+    </cache>
+</config>

@@ -1,8 +1,23 @@
 behind-the-rescue:
   petango:
     site: Stray Animal Adoption Program
+    auth-key: ${PETANGO_API_AUTH_KEY}
   time-zone: America/New_York
+  allowed-origins: https://behindtherescue.com,https://www.behindtherescue.com
 spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
+  jpa:
+    hibernate:
+      ddl-auto: update
+bucket4j:
+  enabled: true
+  filters:
+  - cache-name: buckets
+    url: .*
+    rate-limits:
+    - bandwidths:
+      - capacity: 100
+        time: 1
+        unit: minutes
