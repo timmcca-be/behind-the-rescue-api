@@ -8,6 +8,9 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
