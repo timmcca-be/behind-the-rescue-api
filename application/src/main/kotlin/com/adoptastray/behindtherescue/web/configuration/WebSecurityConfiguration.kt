@@ -29,5 +29,6 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
         http.requiresChannel()
             .requestMatchers({ request -> request.getHeader("X-Forwarded-Proto") != null })
             .requiresSecure()
+        http.csrf().disable()
     }
 }
