@@ -40,6 +40,7 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql:42.3.0")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
