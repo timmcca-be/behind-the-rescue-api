@@ -14,6 +14,8 @@ replacing `<petango-auth-key>` with the actual auth key
         petango:
             auth-key: <petango auth key>
         allowed-origins: http://localhost:3000
+    server:
+        port: 8080
 
 If your front end is running at an address other than
 `http://localhost:3000`, enter that instead.
