@@ -3,7 +3,7 @@ package com.adoptastray.behindtherescue.application.cratereservation.service
 import com.adoptastray.behindtherescue.application.common.DateProvider
 import com.adoptastray.behindtherescue.application.cratereservation.dto.CrateReservationDto
 import com.adoptastray.behindtherescue.application.cratereservation.dto.EventCrateReservationsDto
-import com.adoptastray.behindtherescue.application.cratereservation.dto.ListCrateReservationDto
+import com.adoptastray.behindtherescue.application.cratereservation.dto.EventCrateReservationDto
 import com.adoptastray.behindtherescue.domain.adoptionevent.repository.AdoptionEventRepository
 import com.adoptastray.behindtherescue.domain.animal.repository.AnimalRepository
 import com.adoptastray.behindtherescue.domain.cratereservation.CrateSize
@@ -28,7 +28,7 @@ class CrateReservationService (
         // that way the animals can be populated on the reservation by the repo
         val animalsMap = animalRepository.findBySpecies(adoptionEvent.availableSpecies)
             .associateBy { it.id };
-        val crateReservationDtos = crateReservations.map { reservation -> ListCrateReservationDto(
+        val crateReservationDtos = crateReservations.map { reservation -> EventCrateReservationDto(
             reservation,
             reservation.animalIDs.mapNotNull { animalsMap[it] },
         ) }

@@ -5,7 +5,7 @@ import com.adoptastray.behindtherescue.domain.animal.entity.Animal
 import com.adoptastray.behindtherescue.domain.cratereservation.CrateSize
 import com.adoptastray.behindtherescue.domain.cratereservation.entity.CrateReservation
 
-data class ListCrateReservationDto(
+data class EventCrateReservationDto(
     val id: Int,
     val animals: List<AnimalDto>,
     val crateSize: CrateSize,
