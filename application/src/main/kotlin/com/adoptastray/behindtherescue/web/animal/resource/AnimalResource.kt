@@ -14,6 +14,9 @@ import java.time.LocalDate
 @RestController
 @RequestMapping("/animals")
 class AnimalResource(val service: AnimalService) {
+    @GetMapping
+    fun getAllAnimals(): GetAnimalsResponse = GetAnimalsResponse(service.getAllAnimals())
+
     @GetMapping("/available/{date}/cats")
     fun getAvailableCats(
         @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate,

@@ -16,6 +16,21 @@ import java.time.LocalDate
 
 // private val compressedPhotoPattern = Regex("_TN1\\.jpg$")
 
+private fun parseAnimal(xmlNode: AdoptableSearchResponse.AdoptableSearchResult.XmlNode): Animal? {
+    if (xmlNode.adoptableSearch == null) {
+        return null
+    }
+    val details = xmlNode.adoptableSearch
+    return Animal(
+        details.id.toInt(),
+        details.name,
+        Species.valueOf(details.species.uppercase()),
+        // compressedPhotoPattern.replace(it.photo, ".jpg"),
+        details.photo,
+        details.sublocation
+    )
+}
+
 @Component
 class PetangoAnimalAPI : AnimalAPI {
     @Value("\${behind-the-rescue.petango.auth-key}")
@@ -25,6 +40,14 @@ class PetangoAnimalAPI : AnimalAPI {
 
     private val animalClient: WsAdoptionSoap = WsAdoption().wsAdoptionSoap
 
+    @Cacheable(value = ["animals"], key="'all'")
+    fun findAll(): List<Animal> = animalClient.adoptableSearch(
+        authKey,
+        "", "", "", "",
+        site,
+        "", "", "", "", "", "", "", "", "",
+    ).xmlNode.mapNotNull { parseAnimal(it) }
+
     @Cacheable(value = ["animals"])
     fun findBySpecies(species: Species): List<Animal> = animalClient.adoptableSearch(
         authKey,
@@ -32,17 +55,7 @@ class PetangoAnimalAPI : AnimalAPI {
         "", "", "",
         site,
         "", "", "", "", "", "", "", "", "",
-    ).xmlNode
-        .map { it.adoptableSearch }
-        .filterNotNull()
-        .map { Animal(
-            it.id.toInt(),
-            it.name,
-            Species.valueOf(it.species.uppercase()),
-            // compressedPhotoPattern.replace(it.photo, ".jpg"),
-            it.photo,
-            it.sublocation
-        ) }
+    ).xmlNode.mapNotNull { parseAnimal(it) }
 
     override fun getAnimalDetails(animalID: Int): AnimalDetailsDto {
         val details = animalClient.adoptableDetails(animalID.toString(), authKey).adoptableDetails

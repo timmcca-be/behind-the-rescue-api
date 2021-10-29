@@ -13,6 +13,8 @@ class PetangoAnimalRepository(
     val api: PetangoAnimalAPI,
     val crateReservationRepository: CrateReservationRepository,
 ) : AnimalRepository {
+    override fun findAll(): List<Animal> = api.findAll()
+
     override fun findBySpecies(species: Species): List<Animal> = api.findBySpecies(species)
 
     override fun findAvailableBySpecies(species: Species, date: LocalDate): List<Animal> {

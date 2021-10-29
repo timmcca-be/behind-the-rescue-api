@@ -13,6 +13,8 @@ class AnimalService(
     val animalRepository: AnimalRepository,
     val animalAPI: AnimalAPI
 ) {
+    fun getAllAnimals(): List<AnimalDto> = animalRepository.findAll().map { AnimalDto(it) }
+
     fun getAvailableAnimals(species: Species, date: LocalDate): List<AnimalDto> =
         animalRepository.findAvailableBySpecies(species, date)
             .map { AnimalDto(it) }
