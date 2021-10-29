@@ -13,6 +13,10 @@ replacing `<petango-auth-key>` with the actual auth key
     behind-the-rescue:
         petango:
             auth-key: <petango auth key>
+        allowed-origins: http://localhost:3000
+
+If your front end is running at an address other than
+`http://localhost:3000`, enter that instead.
 
 You can also configure a PostgreSQL database connection
 so your data persists between restarts.
