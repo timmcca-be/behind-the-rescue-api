@@ -38,6 +38,7 @@ task("wsimport-petango") {
                 "Xnocompile" to true,
                 "sourcedestdir" to sourcedestdir,
                 "wsdl" to project.file("src/main/resources/META-INF/wsdl/petango.wsdl"),
+                "wsdlLocation" to "classpath:META-INF/wsdl/petango.wsdl",
                 "package" to "com.adoptastray.petango"
             ) {
                 "xjcarg"("value" to "-XautoNameResolution")
