@@ -5,7 +5,7 @@ behind-the-rescue:
   time-zone: America/New_York
   allowed-origins: https://behindtherescue.com,https://www.behindtherescue.com
 server:
-  port: $PORT
+  port: ${PORT}
 spring:
   cache:
     jcache:
