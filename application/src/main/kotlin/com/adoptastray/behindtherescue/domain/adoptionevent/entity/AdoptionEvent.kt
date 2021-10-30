@@ -29,7 +29,7 @@ data class AdoptionEvent(
     private fun validateAnimal(animal: Animal) =
         require(animal.species == availableSpecies) { "${animal.name} is a ${animal.species}, which cannot be brought to an event for ${availableSpecies}s" }
 
-    fun nextOccurrenceDate(today: LocalDate): LocalDate = today.with(TemporalAdjusters.next(dayOfWeek))
+    fun nextOccurrenceDate(today: LocalDate): LocalDate = today.with(TemporalAdjusters.nextOrSame(dayOfWeek))
 
     fun reserveCrate(date: LocalDate, animals: Collection<Animal>, crateSize: CrateSize, fullyVaccinated: Boolean): CrateReservation {
         validateDate(date)
