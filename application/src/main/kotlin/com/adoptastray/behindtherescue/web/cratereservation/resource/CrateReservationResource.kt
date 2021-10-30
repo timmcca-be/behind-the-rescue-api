@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 
 @RestController
-@RequestMapping("/adoption-events/{adoptionEventID}/dates/{date}/crate-reservations")
 class CrateReservationResource(val service: CrateReservationService) {
-    @GetMapping
+    @GetMapping("/adoption-events/{adoptionEventID}/dates/{date}/crate-reservations")
     fun get(
         @PathVariable adoptionEventID: Int,
         @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate,
     ): EventCrateReservationsDto = service.getByEvent(adoptionEventID, date)
 
-    @PostMapping
+    @PostMapping("/adoption-events/{adoptionEventID}/dates/{date}/crate-reservations")
     fun reserve(
         @PathVariable adoptionEventID: Int,
         @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate,
@@ -29,4 +28,7 @@ class CrateReservationResource(val service: CrateReservationService) {
         request.crateSize,
         request.fullyVaccinated,
     ))
+
+    @DeleteMapping("/crate-reservations/{crateReservationID}")
+    fun cancel(@PathVariable crateReservationID: Int) = service.cancel(crateReservationID)
 }

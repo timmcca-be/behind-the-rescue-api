@@ -52,4 +52,7 @@ class CrateReservationService (
         crateReservationRepository.save(crateReservation)
         return CrateReservationDto(crateReservation, animals, dateProvider.today)
     }
+
+    @Transactional
+    fun cancel(crateReservationID: Int) = crateReservationRepository.deleteById(crateReservationID)
 }
