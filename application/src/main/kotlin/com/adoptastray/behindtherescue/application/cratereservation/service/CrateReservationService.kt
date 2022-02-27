@@ -2,6 +2,7 @@ package com.adoptastray.behindtherescue.application.cratereservation.service
 
 import com.adoptastray.behindtherescue.application.common.DateProvider
 import com.adoptastray.behindtherescue.application.cratereservation.dto.CrateReservationDto
+import com.adoptastray.behindtherescue.application.cratereservation.dto.CanceledCrateReservationDto
 import com.adoptastray.behindtherescue.application.cratereservation.dto.EventCrateReservationsDto
 import com.adoptastray.behindtherescue.application.cratereservation.dto.EventCrateReservationDto
 import com.adoptastray.behindtherescue.domain.adoptionevent.repository.AdoptionEventRepository
@@ -54,5 +55,9 @@ class CrateReservationService (
     }
 
     @Transactional
-    fun cancel(crateReservationID: Int) = crateReservationRepository.deleteById(crateReservationID)
+    fun cancel(crateReservationID: Int): CanceledCrateReservationDto {
+        val crateReservation = crateReservationRepository.findById(crateReservationID).get()
+        crateReservationRepository.delete(crateReservation)
+        return CanceledCrateReservationDto(crateReservation)
+    }
 }

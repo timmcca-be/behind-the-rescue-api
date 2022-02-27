@@ -21,6 +21,7 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
             registry
                 .addMapping("/**")
                 .allowedOrigins(*allowedOrigins.split(",").toTypedArray())
+                .allowedMethods("GET", "POST","PUT", "DELETE")
         }
     }
 

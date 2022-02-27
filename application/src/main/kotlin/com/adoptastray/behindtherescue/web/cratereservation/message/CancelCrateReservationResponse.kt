@@ -1,0 +1,5 @@
+package com.adoptastray.behindtherescue.web.cratereservation.message
+
+import com.adoptastray.behindtherescue.application.cratereservation.dto.CanceledCrateReservationDto
+
+data class CancelCrateReservationResponse(val crateReservation: CanceledCrateReservationDto)

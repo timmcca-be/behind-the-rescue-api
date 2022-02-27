@@ -2,6 +2,7 @@ package com.adoptastray.behindtherescue.web.cratereservation.resource
 
 import com.adoptastray.behindtherescue.application.cratereservation.dto.EventCrateReservationsDto
 import com.adoptastray.behindtherescue.application.cratereservation.service.CrateReservationService
+import com.adoptastray.behindtherescue.web.cratereservation.message.CancelCrateReservationResponse
 import com.adoptastray.behindtherescue.web.cratereservation.message.ReserveCrateRequest
 import com.adoptastray.behindtherescue.web.cratereservation.message.ReserveCrateResponse
 import org.springframework.format.annotation.DateTimeFormat
@@ -30,5 +31,9 @@ class CrateReservationResource(val service: CrateReservationService) {
     ))
 
     @DeleteMapping("/crate-reservations/{crateReservationID}")
-    fun cancel(@PathVariable crateReservationID: Int) = service.cancel(crateReservationID)
+    fun cancel(
+        @PathVariable crateReservationID: Int,
+    ): CancelCrateReservationResponse = CancelCrateReservationResponse(
+        service.cancel(crateReservationID),
+    )
 }
