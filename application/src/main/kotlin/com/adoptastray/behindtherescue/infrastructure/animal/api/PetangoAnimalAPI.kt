@@ -2,6 +2,7 @@ package com.adoptastray.behindtherescue.infrastructure.animal.api
 
 import com.adoptastray.behindtherescue.application.animal.api.AnimalAPI
 import com.adoptastray.behindtherescue.application.animal.dto.AnimalDetailsDto
+import com.adoptastray.behindtherescue.domain.animal.Breed
 import com.adoptastray.behindtherescue.domain.animal.Sex
 import com.adoptastray.behindtherescue.domain.animal.Species
 import com.adoptastray.behindtherescue.domain.animal.entity.Animal
@@ -26,7 +27,8 @@ private fun parseAnimal(xmlNode: AdoptableSearchResponse.AdoptableSearchResult.X
         Species.valueOf(details.species.uppercase()),
         // compressedPhotoPattern.replace(it.photo, ".jpg"),
         details.photo,
-        details.sublocation
+        details.sublocation,
+        Breed(details.primaryBreed, details.secondaryBreed),
     )
 }
 
@@ -50,13 +52,7 @@ class PetangoAnimalAPI : AnimalAPI {
 
     override fun getAnimalDetails(animalID: Int): AnimalDetailsDto {
         val details = animalClient.adoptableDetails(animalID.toString(), authKey).adoptableDetails
-        val breed =
-            if (details.secondaryBreed == null || details.secondaryBreed.isBlank())
-                details.primaryBreed
-            else if (details.secondaryBreed.lowercase() == "mix")
-                "${details.primaryBreed} mix"
-            else
-                "${details.primaryBreed} / ${details.secondaryBreed}"
+        val breed = Breed(details.primaryBreed, details.secondaryBreed)
 
         return AnimalDetailsDto(
             details.id.toInt(),
@@ -67,7 +63,7 @@ class PetangoAnimalAPI : AnimalAPI {
             listOfNotNull(details.photo1, details.photo2, details.photo3),
             LocalDate.parse(details.dateOfBirth),
             details.age.toInt(),
-            breed,
+            breed.value,
             details.dsc,
         )
     }
