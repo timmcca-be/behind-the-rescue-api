@@ -2,7 +2,6 @@ behind-the-rescue:
   petango:
     site: Stray Animal Adoption Program
     auth-key: ${PETANGO_API_AUTH_KEY}
-  time-zone: America/New_York
   allowed-origins: https://behindtherescue.com,https://www.behindtherescue.com
 server:
   port: ${PORT}

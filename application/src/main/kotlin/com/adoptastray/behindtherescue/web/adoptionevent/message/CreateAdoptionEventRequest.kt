@@ -8,4 +8,5 @@ data class CreateAdoptionEventRequest(
     val location: String,
     val availableSpecies: Species,
     val dayOfWeek: DayOfWeek,
+    val timeZone: String,
 )

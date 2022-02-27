@@ -7,8 +7,5 @@ import java.time.ZoneId
 
 @Component
 class DateProvider {
-    @Value("\${behind-the-rescue.time-zone}")
-    private lateinit var timeZoneID: String;
-
-    val today get() = LocalDate.now(ZoneId.of(timeZoneID))
+    fun today(timeZone: ZoneId): LocalDate = LocalDate.now(timeZone)
 }

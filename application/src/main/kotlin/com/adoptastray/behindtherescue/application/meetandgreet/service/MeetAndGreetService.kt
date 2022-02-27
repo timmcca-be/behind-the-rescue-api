@@ -8,6 +8,7 @@ import com.adoptastray.behindtherescue.domain.animal.repository.AnimalRepository
 import com.adoptastray.behindtherescue.domain.meetandgreet.repository.MeetAndGreetRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.Instant
 import java.time.LocalDate
 
 @Service
@@ -33,15 +34,23 @@ class MeetAndGreetService (
     fun schedule(
         adoptionEventID: Int,
         date: LocalDate,
+        timestamp: Instant,
         animalID: Int,
+        potentialAdopterName: String,
         fullyVaccinated: Boolean,
     ): MeetAndGreetDto {
         val adoptionEvent = adoptionEventRepository.findById(adoptionEventID).get()
-        val animal = animalRepository.findAvailableByID(animalID, date)
+        val animal = animalRepository.findBySpeciesAndID(adoptionEvent.availableSpecies, animalID)
         require(animal != null) { "Invalid animal ID" }
-        val meetAndGreet = adoptionEvent.scheduleMeetAndGreet(date, animal, fullyVaccinated)
+        val meetAndGreet = adoptionEvent.scheduleMeetAndGreet(
+            date,
+            timestamp,
+            animal,
+            potentialAdopterName,
+            fullyVaccinated,
+        )
         meetAndGreetRepository.save(meetAndGreet)
-        return MeetAndGreetDto(meetAndGreet, animal, dateProvider.today)
+        return MeetAndGreetDto(meetAndGreet, animal, dateProvider.today(adoptionEvent.timeZone))
     }
 
     @Transactional

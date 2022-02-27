@@ -12,6 +12,7 @@ data class AdoptionEventDto(
     val availableSpecies: Species,
     val dayOfWeek: DayOfWeek,
     val nextOccurrenceDate: LocalDate,
+    val timeZone: String,
 ) {
     constructor(adoptionEvent: AdoptionEvent, today: LocalDate) : this(
         adoptionEvent.id,
@@ -20,5 +21,6 @@ data class AdoptionEventDto(
         adoptionEvent.availableSpecies,
         adoptionEvent.dayOfWeek,
         adoptionEvent.nextOccurrenceDate(today),
+        adoptionEvent.timeZone.id,
     )
 }

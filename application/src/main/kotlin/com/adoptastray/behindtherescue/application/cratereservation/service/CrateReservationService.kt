@@ -50,7 +50,7 @@ class CrateReservationService (
         require(animals.size == animalIDs.size) { "Invalid animal ID(s)" }
         val crateReservation = adoptionEvent.reserveCrate(date, animals, crateSize, fullyVaccinated)
         crateReservationRepository.save(crateReservation)
-        return CrateReservationDto(crateReservation, animals, dateProvider.today)
+        return CrateReservationDto(crateReservation, animals, dateProvider.today(adoptionEvent.timeZone))
     }
 
     @Transactional

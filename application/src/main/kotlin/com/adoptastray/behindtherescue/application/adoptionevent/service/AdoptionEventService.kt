@@ -20,14 +20,13 @@ class AdoptionEventService(
     @Transactional(readOnly = true)
     fun getAll(): List<AdoptionEventDto> {
         return adoptionEventRepository.findAll()
-            .map { AdoptionEventDto(it, dateProvider.today) }
+            .map { AdoptionEventDto(it, dateProvider.today(it.timeZone)) }
     }
 
     @Transactional(readOnly = true)
     fun get(adoptionEventID: Int): AdoptionEventDto {
-        val adoptionEvent = adoptionEventRepository.findById(adoptionEventID)
-        require(adoptionEvent.isPresent) { "No adoption event with ID $adoptionEventID" }
-        return AdoptionEventDto(adoptionEvent.get(), dateProvider.today)
+        val adoptionEvent = adoptionEventRepository.findById(adoptionEventID).get()
+        return AdoptionEventDto(adoptionEvent, dateProvider.today(adoptionEvent.timeZone))
     }
 
     @Transactional
@@ -36,14 +35,16 @@ class AdoptionEventService(
         location: String,
         availableSpecies: Species,
         dayOfWeek: DayOfWeek,
+        timeZone: String,
     ): AdoptionEventDto {
         val adoptionEvent = AdoptionEvent(
             name = name,
             location = location,
             availableSpecies = availableSpecies,
             dayOfWeek = dayOfWeek,
+            timeZone = ZoneId.of(timeZone),
         )
         adoptionEventRepository.save(adoptionEvent)
-        return AdoptionEventDto(adoptionEvent, dateProvider.today)
+        return AdoptionEventDto(adoptionEvent, dateProvider.today(adoptionEvent.timeZone))
     }
 }

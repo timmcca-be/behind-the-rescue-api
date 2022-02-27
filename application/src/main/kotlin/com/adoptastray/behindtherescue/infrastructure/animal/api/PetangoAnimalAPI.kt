@@ -1,4 +1,4 @@
-package com.adoptastray.behindtherescue.infrastructure.animal.repository
+package com.adoptastray.behindtherescue.infrastructure.animal.api
 
 import com.adoptastray.behindtherescue.application.animal.api.AnimalAPI
 import com.adoptastray.behindtherescue.application.animal.dto.AnimalDetailsDto
@@ -11,7 +11,6 @@ import com.adoptastray.petango.WsAdoptionSoap
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 // private val compressedPhotoPattern = Regex("_TN1\\.jpg$")
@@ -39,14 +38,6 @@ class PetangoAnimalAPI : AnimalAPI {
     private lateinit var site: String
 
     private val animalClient: WsAdoptionSoap = WsAdoption().wsAdoptionSoap
-
-    @Cacheable(value = ["animals"], key="'all'")
-    fun findAll(): List<Animal> = animalClient.adoptableSearch(
-        authKey,
-        "", "", "", "",
-        site,
-        "", "", "", "", "", "", "", "", "",
-    ).xmlNode.mapNotNull { parseAnimal(it) }
 
     @Cacheable(value = ["animals"])
     fun findBySpecies(species: Species): List<Animal> = animalClient.adoptableSearch(

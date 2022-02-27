@@ -14,8 +14,11 @@ import java.time.LocalDate
 @RestController
 @RequestMapping("/animals")
 class AnimalResource(val service: AnimalService) {
-    @GetMapping
-    fun getAllAnimals(): GetAnimalsResponse = GetAnimalsResponse(service.getAllAnimals())
+    @GetMapping("/cats")
+    fun getAllCats(): GetAnimalsResponse = GetAnimalsResponse(service.getAnimals(Species.CAT))
+
+    @GetMapping("/dogs")
+    fun getAllDogs(): GetAnimalsResponse = GetAnimalsResponse(service.getAnimals(Species.DOG))
 
     @GetMapping("/available/{date}/cats")
     fun getAvailableCats(

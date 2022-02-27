@@ -4,7 +4,7 @@
         <expiry>
             <ttl unit="minutes">5</ttl>
         </expiry>
-        <heap unit="entries">3</heap>
+        <heap unit="entries">2</heap>
     </cache>
     <cache alias="buckets">
         <expiry>

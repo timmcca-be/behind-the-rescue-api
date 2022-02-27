@@ -25,5 +25,6 @@ class AdoptionEventResource(val service: AdoptionEventService) {
             request.location,
             request.availableSpecies,
             request.dayOfWeek,
+            request.timeZone,
         ))
 }

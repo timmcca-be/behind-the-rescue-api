@@ -25,7 +25,9 @@ class MeetAndGreetResource(val service: MeetAndGreetService) {
     ): ScheduleMeetAndGreetResponse = ScheduleMeetAndGreetResponse(service.schedule(
         adoptionEventID,
         date,
+        request.timestamp,
         request.animalID,
+        request.potentialAdopterName,
         request.fullyVaccinated,
     ))
 
