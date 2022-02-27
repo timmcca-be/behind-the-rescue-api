@@ -64,7 +64,7 @@ data class AdoptionEvent(
         return MeetAndGreet(
             adoptionEvent = this,
             date = date,
-            timestamp = Timestamp(timestamp.toEpochMilli()),
+            timestamp = Timestamp.from(timestamp),
             animalID = animal.id,
             potentialAdopterName = potentialAdopterName,
             fullyVaccinated = fullyVaccinated

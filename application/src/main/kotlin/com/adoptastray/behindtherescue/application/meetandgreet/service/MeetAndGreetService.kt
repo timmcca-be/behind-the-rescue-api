@@ -1,6 +1,7 @@
 package com.adoptastray.behindtherescue.application.meetandgreet.service
 
 import com.adoptastray.behindtherescue.application.common.DateProvider
+import com.adoptastray.behindtherescue.application.meetandgreet.dto.CanceledMeetAndGreetDto
 import com.adoptastray.behindtherescue.application.meetandgreet.dto.EventMeetAndGreetDto
 import com.adoptastray.behindtherescue.application.meetandgreet.dto.MeetAndGreetDto
 import com.adoptastray.behindtherescue.domain.adoptionevent.repository.AdoptionEventRepository
@@ -21,7 +22,7 @@ class MeetAndGreetService (
     @Transactional(readOnly = true)
     fun getByEvent(adoptionEventID: Int, date: LocalDate): List<EventMeetAndGreetDto> {
         val adoptionEvent = adoptionEventRepository.findById(adoptionEventID).get()
-        val meetAndGreets = meetAndGreetRepository.findByAdoptionEventIdAndDate(adoptionEventID, date)
+        val meetAndGreets = meetAndGreetRepository.findByAdoptionEventIdAndDateOrderByTimestampAsc(adoptionEventID, date)
         val animalsMap = animalRepository.findBySpecies(adoptionEvent.availableSpecies)
             .associateBy { it.id };
         return meetAndGreets.map { meetAndGreet -> EventMeetAndGreetDto(
@@ -54,5 +55,9 @@ class MeetAndGreetService (
     }
 
     @Transactional
-    fun cancel(meetAndGreetID: Int) = meetAndGreetRepository.deleteById(meetAndGreetID)
+    fun cancel(meetAndGreetID: Int): CanceledMeetAndGreetDto {
+        val meetAndGreet = meetAndGreetRepository.findById(meetAndGreetID).get()
+        meetAndGreetRepository.delete(meetAndGreet)
+        return CanceledMeetAndGreetDto(meetAndGreet)
+    }
 }

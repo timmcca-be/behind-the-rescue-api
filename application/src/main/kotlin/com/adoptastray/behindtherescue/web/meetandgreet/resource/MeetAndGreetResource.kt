@@ -1,6 +1,7 @@
 package com.adoptastray.behindtherescue.web.meetandgreet.resource
 
 import com.adoptastray.behindtherescue.application.meetandgreet.service.MeetAndGreetService
+import com.adoptastray.behindtherescue.web.meetandgreet.message.CancelMeetAndGreetResponse
 import com.adoptastray.behindtherescue.web.meetandgreet.message.GetMeetAndGreetsByEventResponse
 import com.adoptastray.behindtherescue.web.meetandgreet.message.ScheduleMeetAndGreetRequest
 import com.adoptastray.behindtherescue.web.meetandgreet.message.ScheduleMeetAndGreetResponse
@@ -32,5 +33,7 @@ class MeetAndGreetResource(val service: MeetAndGreetService) {
     ))
 
     @DeleteMapping("/meet-and-greets/{meetAndGreetID}")
-    fun cancel(@PathVariable meetAndGreetID: Int) = service.cancel(meetAndGreetID)
+    fun cancel(
+        @PathVariable meetAndGreetID: Int,
+    ) = CancelMeetAndGreetResponse(service.cancel(meetAndGreetID))
 }
