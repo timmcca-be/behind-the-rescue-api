@@ -24,11 +24,12 @@ class CrateReservationService (
     @Transactional(readOnly = true)
     fun getByEvent(adoptionEventID: Int, date: LocalDate): EventCrateReservationsDto {
         val adoptionEvent = adoptionEventRepository.findById(adoptionEventID).get()
-        val crateReservations = crateReservationRepository.findByAdoptionEventIdAndDate(adoptionEventID, date)
         // TODO: should refactor data access to abstract away the JPA bits
         // that way the animals can be populated on the reservation by the repo
         val animalsMap = animalRepository.findBySpecies(adoptionEvent.availableSpecies)
-            .associateBy { it.id };
+            .associateBy { it.id }
+        val crateReservations = crateReservationRepository.findByAdoptionEventIdAndDate(adoptionEventID, date)
+            .filter { it.animalIDs.intersect(animalsMap.keys).isNotEmpty() }
         val crateReservationDtos = crateReservations.map { reservation -> EventCrateReservationDto(
             reservation,
             reservation.animalIDs.mapNotNull { animalsMap[it] },

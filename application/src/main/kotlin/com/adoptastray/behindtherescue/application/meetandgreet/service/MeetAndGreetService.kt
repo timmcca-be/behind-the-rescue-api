@@ -25,10 +25,12 @@ class MeetAndGreetService (
         val meetAndGreets = meetAndGreetRepository.findByAdoptionEventIdAndDateOrderByTimestampAsc(adoptionEventID, date)
         val animalsMap = animalRepository.findBySpecies(adoptionEvent.availableSpecies)
             .associateBy { it.id };
-        return meetAndGreets.map { meetAndGreet -> EventMeetAndGreetDto(
-            meetAndGreet,
-            animalsMap[meetAndGreet.animalID],
-        ) }
+        return meetAndGreets
+            .filter { it.animalID in animalsMap }
+            .map { meetAndGreet -> EventMeetAndGreetDto(
+                meetAndGreet,
+                animalsMap[meetAndGreet.animalID]!!,
+            ) }
     }
 
     @Transactional
